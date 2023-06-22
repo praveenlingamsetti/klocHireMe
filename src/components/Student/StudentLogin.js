@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Navigate, createPath, useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -11,6 +11,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import TestContext from "../../TestContext";
 
 const defaultTheme = createTheme();
 export default function StudentLogin() {
@@ -40,6 +41,8 @@ export default function StudentLogin() {
     },
   ];
 
+  const { addCurrentTest } = useContext(TestContext);
+
   const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -61,11 +64,14 @@ export default function StudentLogin() {
           if (filteredData.uniqueId === testKey) {
             setMessage("You can write the Test");
             const testName = filteredData.test;
+            addCurrentTest(testName);
+            localStorage.setItem("test", JSON.stringify(testName));
             console.log(filteredData, "test");
             const apiKey = "AIzaSyAz1z7QqYvovxmnO-lvzoORcMC1UZzXNRE";
-            const path = testDetails.find(
-              (test) => test.testName === testName
-            )?.path;
+            const path = "/test";
+            // testDetails.find(
+            //   (test) => test.testName === testName
+            // )?.path;
             navigate(path);
             fetch(
               `https://script.google.com/macros/s/AKfycbyZ1M9Wiq5XVZwik3Pe-HvaLaklv_USkK15l5GLzMjtHXDND9cXzbmNraolbnGlUIS9Ig/exec?key=${apiKey}&uniqueId=${testKey}`
