@@ -7,7 +7,7 @@ import Dashboard from "./components/Admin/Dashboard";
 import StudentLogin from "./components/Student/StudentLogin";
 import Assessment from "./components/Admin/Assessment";
 import NotFound from "./components/Admin/NotFound";
-import AllTests from "./components/Student/StudentTests/AllTests";
+import AllTests from "./components/Student/StudentTest";
 
 const App = () => {
   const [reports, setReports] = useState([]);
